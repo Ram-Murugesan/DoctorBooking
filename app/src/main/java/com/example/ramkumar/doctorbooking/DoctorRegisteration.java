@@ -105,8 +105,8 @@ public class DoctorRegisteration extends AppCompatActivity {
                     }
                 }
 
-                if(!status){
-                    index.push();
+                if(status == false){
+                    index = registerDoctor.push();
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("DrName", doctorNameStr);
                     map.put("DoctorMobile", doctorPhnoStr);
@@ -114,7 +114,7 @@ public class DoctorRegisteration extends AppCompatActivity {
                     map.put("DrPassword", doctorPasswordStr);
                     map.put("Special", doctorSpecialStr);
                     map.put("From", from);
-                    map.put("To", to);
+                    //map.put("To", to);
                     map.put("index", index.getKey());
                     index.updateChildren(map);
 

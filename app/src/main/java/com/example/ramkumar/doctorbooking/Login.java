@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
 
     private EditText mobileNo, password;
     private Button login;
-    private String mobileNoStr, passwordStr, choice;
+    private String mobileNoStr, passwordStr, choice, special, desease;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +37,11 @@ public class Login extends AppCompatActivity {
 
         mobileNo = (EditText) findViewById(R.id.mobileNo);
         password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.login);
+        login = (Button) findViewById(R.id.signIn);
 
         Bundle bundle = getIntent().getExtras();
         choice = bundle.getString("choice");
-
+        System.out.println("choice" + choice);
         if (choice.equals("Doctor")) {
             /*  Selected Login is Doctor    */
             doctor.addChildEventListener(new ChildEventListener() {
@@ -49,7 +49,8 @@ public class Login extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     mobileNoStr = (String) dataSnapshot.child("DoctorMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("DrPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1);
+                    special = (String) dataSnapshot.child("Special").getValue();
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1, special);
                     rowItemSelect.add(item);
                 }
 
@@ -57,7 +58,8 @@ public class Login extends AppCompatActivity {
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                     mobileNoStr = (String) dataSnapshot.child("DoctorMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("DrPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1);
+                    special = (String) dataSnapshot.child("Special").getValue();
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1, special);
                     rowItemSelect.add(item);
 
                 }
@@ -66,7 +68,8 @@ public class Login extends AppCompatActivity {
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
                     mobileNoStr = (String) dataSnapshot.child("DoctorMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("DrPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1);
+                    special = (String) dataSnapshot.child("Special").getValue();
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1, special);
                     rowItemSelect.add(item);
 
                 }
@@ -89,7 +92,8 @@ public class Login extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     mobileNoStr = (String) dataSnapshot.child("PatientMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("PatientPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr);
+                    desease = (String) dataSnapshot.child("Desease").getValue();
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1.0f, desease);
                     rowItemSelect.add(item);
                 }
 
@@ -97,7 +101,7 @@ public class Login extends AppCompatActivity {
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                     mobileNoStr = (String) dataSnapshot.child("PatientMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("PatientPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr);
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1.0f, desease);
                     rowItemSelect.add(item);
 
                 }
@@ -106,7 +110,7 @@ public class Login extends AppCompatActivity {
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
                     mobileNoStr = (String) dataSnapshot.child("PatientMobile").getValue();
                     passwordStr = (String) dataSnapshot.child("PatientPassword").getValue();
-                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr);
+                    RowItemSelect item = new RowItemSelect(mobileNoStr, passwordStr, 1.0f, desease);
                     rowItemSelect.add(item);
 
                 }
@@ -121,26 +125,29 @@ public class Login extends AppCompatActivity {
 
                 }
             });
-
+        }
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     mobileNoStr = mobileNo.getText().toString();
                     passwordStr = password.getText().toString();
-
+                    System.out.println("choice " + choice);
                     if (choice.equals("Doctor")) {
                         for (int i = 0; i < rowItemSelect.size(); i++) {
                             if (mobileNoStr.equals(rowItemSelect.get(i).getDoctorPhno())) {
-                                Intent intent = new Intent();
+                                Intent intent = new Intent(Login.this, Doctor.class);
+                                intent.putExtra("Special", rowItemSelect.get(i).getDoctorSpecial());
                                 startActivity(intent);
                                 finish();
                             }
-                        }
-                    } else if (choice.equals("Patient")) {
+                       }
+                    }
+                if (choice.equals("Patient")) {
                         for (int i = 0; i < rowItemSelect.size(); i++) {
                             if (mobileNoStr.equals(rowItemSelect.get(i).getDoctorPhno())) {
                                 Intent intent = new Intent();
+                                //intent.putExtra("Special", rowItemSelect.get(i).getDoctorSpecial());
                                 startActivity(intent);
                                 finish();
                             }
@@ -149,8 +156,6 @@ public class Login extends AppCompatActivity {
                 }
 
             });
-
-        }
 
 
     }

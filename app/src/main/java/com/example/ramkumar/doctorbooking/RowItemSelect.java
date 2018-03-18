@@ -132,15 +132,17 @@ public class RowItemSelect {
     }
 
     /*  For Doctor Login    */
-    public RowItemSelect(String doctorPhno, String doctorPassword, int a) {
+    public RowItemSelect(String doctorPhno, String doctorPassword, int a, String doctorSpecial) {
         this.doctorPhno = doctorPhno;
         this.doctorPassword = doctorPassword;
+        this.doctorSpecial = doctorSpecial;
     }
 
     /*  For Patient Login    */
-    public RowItemSelect(String patientPhno, String patientPassword) {
+    public RowItemSelect(String patientPhno, String patientPassword, float a, String patientDesease) {
         this.patientPhno = patientPhno;
         this.patientPassword = patientPassword;
+        this.patientDesease = patientDesease;
     }
 
     /*  For Doctor List */

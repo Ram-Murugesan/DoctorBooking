@@ -16,26 +16,16 @@
         android:orientation="vertical"
         android:layout_marginTop="100dp">
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/mobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-
-            <AutoCompleteTextView
-                android:id="@+id/mobileNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mobile"
-                android:backgroundTint="@android:color/holo_green_light"
-                android:inputType="phone"
-                android:maxLines="1" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:hint="Mobile No"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="number"
+            android:maxLines="1" />
 
             <EditText
                 android:id="@+id/password"
@@ -48,7 +38,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1" />
 
-        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/signIn"

@@ -1,5 +1,6 @@
 package com.example.ramkumar.doctorbooking;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         doctorLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                intent.putExtra("choice", "Doctor");
+                startActivity(intent);
 
             }
         });
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         patientLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                intent.putExtra("choice", "Patient");
+                startActivity(intent);
 
             }
         });
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         doctorReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DoctorRegisteration.class);
+                startActivity(intent);
 
             }
         });
@@ -45,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         patientReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PatientRegisteration.class);
+                startActivity(intent);
 
             }
         });

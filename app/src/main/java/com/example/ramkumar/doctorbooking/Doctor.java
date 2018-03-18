@@ -2,6 +2,9 @@ package com.example.ramkumar.doctorbooking;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -19,7 +22,8 @@ public class Doctor extends AppCompatActivity {
     private List<RowItemSelect> rowItemSelect;
 
     private ListView patientList;
-    private String patientName, patientMobile, patientDesease;
+    private Button showPatient;
+    private String patientName, patientMobile, patientDesease, special;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,12 @@ public class Doctor extends AppCompatActivity {
         registerPatient = root.child("Patient");
         rowItemSelect = new ArrayList<>();
 
+        patientList = (ListView) findViewById(R.id.doctorList);
+        showPatient = (Button) findViewById(R.id.showPatient);
+
+        Bundle bundle = getIntent().getExtras();
+        special = bundle.getString("Special");
+        System.out.println("Special " + special);
         registerPatient.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -69,6 +79,27 @@ public class Doctor extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        showPatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] items = new String[rowItemSelect.size()];
+                int a = 0;
+                System.out.println("RowItemSelect in Doctor Class = " + rowItemSelect);
+                for(int i=0; i<rowItemSelect.size(); i++){
+                    if(rowItemSelect.get(i).getPatientDesease().equals(special)){
+                        items[a] = rowItemSelect.get(i).getPatientName();
+                        a++;
+                        System.out.println("rowItemSelect.get(i).getPatientName() " + rowItemSelect.get(i).getPatientName());
+                    }
+                }
+
+                if(items != null){
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(Doctor.this, R.layout.support_simple_spinner_dropdown_item, items);
+                    patientList.setAdapter(adapter);
+                }
             }
         });
 
